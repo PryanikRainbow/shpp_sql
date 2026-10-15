@@ -58,17 +58,19 @@ CREATE TABLE IF NOT EXISTS buildings (
     street_id INT NOT NULL,
     building_type_id INT NOT NULL,
     number VARCHAR(100) NOT NULL,
+
     entrances_quantity TINYINT NULL,
-    latitude DECIMAL(8, 6) NOT NULL,
-    longitude DECIMAL(9, 6) NOT NULL,
-    -- location POINT NOT NULL SRID 4326,
+    -- latitude DECIMAL(8, 6) NOT NULL,
+    -- longitude DECIMAL(9, 6) NOT NULL,
+    location POINT NOT NULL SRID 4326,
     -- Spatial Reference System Identifier
     -- Preferred MySQL approach
 
     FOREIGN KEY (street_id) REFERENCES streets (id),
     FOREIGN KEY (building_type_id) REFERENCES building_type (id),
+
     CONSTRAINT uq_street_id_building_number UNIQUE (street_id, number),
-    INDEX idx_building_coordinates (latitude, longitude)
-    -- SPATIAL INDEX idx_building_location (location)
+    -- INDEX idx_building_coordinates (latitude, longitude)
+    SPATIAL INDEX idx_building_location (location)
     -- Preferred MySQL approach
 );
